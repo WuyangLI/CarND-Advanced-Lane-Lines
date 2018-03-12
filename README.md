@@ -1,5 +1,5 @@
-### **Camera Calibration**
-
+###
+**Camera Calibration**
 
 #### 
 **1. Calculate camera matrix and distortion coefficients. **
@@ -8,8 +8,6 @@ The code for this step is contained in lines 10 - 37 of the file called advanced
 
 Basically, it's composed of two steps:
 
-
-
 1.  get the object points
 1.  compute the camera matrix and distortion coefficients. 
 
@@ -17,13 +15,7 @@ As done in the lecture, I start by preparing "object points", which are like  (x
 
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function. I applied this distortion correction to the test image using the `cv2.undistort()`function and obtained this result:
 
-
-
-<p id="gdcalert1" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/P40.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert2">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
 ![alt_text](images/P40.png "image_tooltip")
-
 
 Figure 1. Camera calibration
 
@@ -32,8 +24,6 @@ Figure 1. Camera calibration
 **Pipeline (single images)**
 
 The pipeline is composed with the following 4 steps. The function draw_lane (line 301 - 343 in advanced_lane_finding.py) is the concrete implementation of the pipeline.
-
-
 
 *   Undistort image
 *   Create threshold binary image
@@ -44,18 +34,11 @@ The pipeline is composed with the following 4 steps. The function draw_lane (lin
 #### 
 **1. Correct distortion.**
 
-
 As we computed camera matrix and distortion coefficients in the Camera Calibration step, we could easily undistort images by calling cv2.undistort() function. Corresponding function _undistort_img_ (line 46 - 48) in _advanced_lane_finding.py_ is used to correct distortion.
 
 Figure 2 illustrates the before and after effect of distortion correction step. We could clearly see the change of car front cover at the bottom of the image.
 
-
-
-<p id="gdcalert2" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/P41.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert3">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
 ![alt_text](images/P41.png "image_tooltip")
-
 
 Figure 2. Distortion correction
 
@@ -65,21 +48,13 @@ Figure 2. Distortion correction
 
 To create binary image, color transform and gradient techniques are applied in the following way (function _detect_lane_boarder_ line 106 - 115 in _advanced_lane_finding.py_):
 
-
-
 *   Apply HLS color transform
 *   Compute gradients on L channel and S channel
 *   Combine gradients of two channels 
 
 As shown in Figure 3, the final binary image could well capture both the yellow and white lane in the image, even in the presence of tree shadow.
 
-
-
-<p id="gdcalert3" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/P42.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert4">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
 ![alt_text](images/P42.png "image_tooltip")
-
 
 Figure 3. Final binary image 
 
@@ -89,43 +64,19 @@ S channel could capture both yellow and white lane very well, however, it fails 
 
 The disadvantage of L channel is, it performs very badly in terms of detecting yellow lane, which is the strength of S channel. You could clearly see this difference by comparing Figure 4 with Figure 5 in the left bottom.
 
-
-
-<p id="gdcalert4" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/P43.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert5">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
 ![alt_text](images/P43.png "image_tooltip")
-
 
 Figure 4.  L channel binary image
 
-
-
-<p id="gdcalert5" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/P44.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert6">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
 ![alt_text](images/P44.png "image_tooltip")
-
 
 Figure 5. S channel binary image
 
 As for the gradients, I combined gradients at x orientation and y orientation as well as the magnitude of gradients. (function _Combine_thresh_ Line 96 - 99 in _advanced_lane_finding.py_)
 
-
-
-<p id="gdcalert6" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/P45.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert7">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
 ![alt_text](images/P45.png "image_tooltip")
 
-
-
-
-<p id="gdcalert7" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/P46.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert8">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
 ![alt_text](images/P46.png "image_tooltip")
-
 
 Figure 6. S channel gradients
 
@@ -149,25 +100,13 @@ dst = [[190, 720], [190, 0], [1120, 0], [1120, 720]]
 #### 
 I verified that my perspective transform worked as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image. This is shown in Figure 7.
 
-
-
-<p id="gdcalert8" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/P47.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert9">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
 ![alt_text](images/P47.png "image_tooltip")
-
 
 Figure 7. Perspective transform
 
 By applying both distortion correction and perspective transform to test image, we could get a bird view of the lanes.
 
-
-
-<p id="gdcalert9" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/P48.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert10">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
 ![alt_text](images/P48.png "image_tooltip")
-
 
 Figure 8. Bird view of lanes
 
@@ -179,13 +118,7 @@ With binary image of lanes in bird-view, we could identify the lane-line pixels 
 
 These two functions are based on the example code given in lecture 33.
 
-
-
-<p id="gdcalert10" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/P49.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert11">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
 ![alt_text](images/P49.png "image_tooltip")
-
 
 Figure 9. Lane pixel identification and lane fitting
 
@@ -195,19 +128,11 @@ Figure 9. Lane pixel identification and lane fitting
 
 Radius of curvature is calculated by function _Calculate_curvature_ (line 140 - 144), which is concrete example of the formula below:
 
-
-
-<p id="gdcalert11" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/P410.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert12">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
 ![alt_text](images/P410.png "image_tooltip")
-
 
 Vehicle's distance from center is calculated by _line 225 to 229 _in advanced_lane_finding.py.
 
 To get the difference between center of the lane and the center of the car, the basic idea is:
-
-
 
 *   First of all, calculate pixel distance from the vehicle to lane center.
 *   Secondly, convert from pixel space to real world.
@@ -224,8 +149,6 @@ _Distance = (lane_center - camera_center)*meter_per_pixel_
 
 The pipeline is implemented by _function draw_lane_ ( line 370 - 382 in advanced_lane_finding.py).
 
-
-
 *   Undistort image (line 304)
 *   Create threshold binary image (line 305)
 *   Get bird-view perspective (line 306)
@@ -234,13 +157,7 @@ The pipeline is implemented by _function draw_lane_ ( line 370 - 382 in advanced
 
 Below is the final result of test image: 
 
-
-
-<p id="gdcalert12" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/P411.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert13">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
 ![alt_text](images/P411.png "image_tooltip")
-
 
 Figure 10. Final result
 
